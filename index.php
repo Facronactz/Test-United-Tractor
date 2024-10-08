@@ -16,16 +16,16 @@
     // Proses data saat formulir disubmit
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Ambil data dari form
-        $tanggal = htmlspecialchars($_POST['tanggal']);
-        $sales = htmlspecialchars($_POST['sales']);
-        $leadname = htmlspecialchars($_POST['leadname']);
-        $produk = htmlspecialchars($_POST['produk']);
-        $whatsapp = htmlspecialchars($_POST['whatsapp']);
-        $kota = htmlspecialchars($_POST['kota']);
+        $tanggal = htmlspecialchars(string: $_POST['tanggal']);
+        $sales = htmlspecialchars(string: $_POST['sales']);
+        $leadname = htmlspecialchars(string: $_POST['leadname']);
+        $produk = htmlspecialchars(string: $_POST['produk']);
+        $whatsapp = htmlspecialchars(string: $_POST['whatsapp']);
+        $kota = htmlspecialchars(string: $_POST['kota']);
 
         // Simpan data ke database
         $sql = "INSERT INTO leads (tanggal, id_sales, nama_lead, id_produk, no_wa, kota) VALUES ('$tanggal', '$sales', '$leadname', '$produk', '$whatsapp', '$kota')";
-        if ($conn->query($sql) === TRUE) {
+        if ($conn->query(query: $sql) === TRUE) {
             $message = "Data berhasil disimpan.";
         } else {
             $message = "Error: " . $sql . "<br>" . $conn->error;
@@ -34,7 +34,7 @@
 
     // Ambil semua data dari tabel leads
     $sql_select = "SELECT * FROM leads";
-    $result = $conn->query($sql_select);
+    $result = $conn->query(query: $sql_select);
     ?>
 
     <div class="p-5" id="root">
@@ -126,12 +126,12 @@
                             // Fetch data per baris
                             while ($row = $result->fetch_assoc()) {
                                 echo "<tr>";
-                                echo "<td>" . htmlspecialchars($row['tanggal']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['id_sales']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['nama_lead']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['id_produk']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['no_wa']) . "</td>";
-                                echo "<td>" . htmlspecialchars($row['kota']) . "</td>";
+                                echo "<td>" . htmlspecialchars(string: $row['tanggal']) . "</td>";
+                                echo "<td>" . htmlspecialchars(string: $row['id_sales']) . "</td>";
+                                echo "<td>" . htmlspecialchars(string: $row['nama_lead']) . "</td>";
+                                echo "<td>" . htmlspecialchars(string: $row['id_produk']) . "</td>";
+                                echo "<td>" . htmlspecialchars(string: $row['no_wa']) . "</td>";
+                                echo "<td>" . htmlspecialchars(string: $row['kota']) . "</td>";
                                 echo "</tr>";
                             }
                             ?>
