@@ -103,3 +103,31 @@ if ($result->num_rows > 0) {
         echo "Error creating table leads: " . $conn->error;
     }
 }
+
+$produk = array(
+    array('id' => 1, 'nama' => 'Cipta Residence 2'),
+    array('id' => 2, 'nama' => 'The Rich'),
+    array('id' => 3, 'nama' => 'Namorambe City'),
+    array('id' => 4, 'nama' => 'Grand Banten'),
+    array('id' => 5, 'nama' => 'Turi Mansion'),
+    array('id' => 6, 'nama' => 'Cipta Residence 1')
+);
+foreach ($produk as $row) {
+    $id = $row['id'];
+    $nama = $row['nama'];
+
+    // Check if produk already exists
+    $query = "SELECT * FROM produk WHERE id = $id";
+    $result = $conn->query(query: $query);
+    if ($result->num_rows > 0) {
+        error_log(message: "Produk $nama already exists");
+    } else {
+        // Insert produk
+        $query = "INSERT INTO produk (id, nama) VALUES ($id, '$nama')";
+        if ($conn->query(query: $query) === TRUE) {
+            error_log(message: "Produk $nama inserted successfully");
+        } else {
+            error_log(message: "Error inserting produk $nama: " . $conn->error);
+        }
+    }
+}
