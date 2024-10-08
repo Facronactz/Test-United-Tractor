@@ -103,13 +103,13 @@ foreach ($produk as $row) {
     }
 }
 
-$data = array(
+$sales = array(
     array('id' => 1, 'nama' => 'sales 1'),
     array('id' => 2, 'nama' => 'sales 2'),
     array('id' => 3, 'nama' => 'sales 3')
 );
 
-foreach ($data as $row) {
+foreach ($sales as $row) {
     $id = $row['id'];
     $nama = $row['nama'];
 
