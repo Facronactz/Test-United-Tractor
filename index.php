@@ -23,11 +23,11 @@
 
   // Ambil data produk untuk dropdown
   $sql_produk = "SELECT * FROM produk";
-  $result_produk = $conn->query($sql_produk);
+  $result_produk = $conn->query(query: $sql_produk);
 
   // Ambil data sales untuk dropdown
   $sql_sales = "SELECT * FROM sales";
-  $result_sales = $conn->query($sql_sales);
+  $result_sales = $conn->query(query: $sql_sales);
 
   // Penanganan pencarian berdasarkan produk, sales, dan bulan
   $search_produk = "";
@@ -41,9 +41,9 @@
 
   // Check if searching
   if (isset($_POST['search'])) {
-      $search_produk = htmlspecialchars($_POST['search_produk']);
-      $search_sales = htmlspecialchars($_POST['search_sales']);
-      $search_bulan = htmlspecialchars($_POST['search_bulan']);
+      $search_produk = htmlspecialchars(string: $_POST['search_produk']);
+      $search_sales = htmlspecialchars(string: $_POST['search_sales']);
+      $search_bulan = htmlspecialchars(string: $_POST['search_bulan']);
 
       $conditions = [];
       if (!empty($search_produk)) {
@@ -57,20 +57,20 @@
       }
 
       if (count($conditions) > 0) {
-          $sql .= " WHERE " . implode(' AND ', $conditions);
+          $sql .= " WHERE " . implode(separator: ' AND ', array: $conditions);
       }
   }
 
   // Query untuk menghitung total data (dengan filter pencarian jika ada)
-  $sql_count = str_replace("SELECT leads.*, sales.nama, produk.nama", "SELECT COUNT(*) as total", $sql);
-  $result_count = $conn->query($sql_count);
+  $sql_count = str_replace(search: "SELECT leads.*, sales.nama, produk.nama", replace: "SELECT COUNT(*) as total", subject: $sql);
+  $result_count = $conn->query(query: $sql_count);
   $total_data = $result_count->fetch_assoc()['total'];
-  $total_pages = ceil($total_data / $limit); // Hitung total halaman
+  $total_pages = ceil(num: $total_data / $limit); // Hitung total halaman
 
   // Tambahkan ORDER BY, LIMIT dan OFFSET
   $sql .= " ORDER BY leads.id ASC LIMIT $limit OFFSET $offset";
 
-  $result = $conn->query($sql);
+  $result = $conn->query(query: $sql);
   ?>
 
   <div class="p-5" id="root">
@@ -147,7 +147,7 @@
             <select class="form-select" name="search_produk">
               <option value="">-- Pilih Produk --</option>
               <?php
-              $result_produk->data_seek(0); // Reset pointer ke awal
+              $result_produk->data_seek(offset: 0); // Reset pointer ke awal
               while ($produk = $result_produk->fetch_assoc()) { ?>
                   <option value="<?= $produk['id'] ?>" <?= $search_produk == $produk['id'] ? 'selected' : '' ?>>
                       <?= $produk['nama'] ?>
@@ -159,7 +159,7 @@
             <select class="form-select" name="search_sales">
               <option value="">-- Pilih Sales --</option>
               <?php
-              $result_sales->data_seek(0); // Reset pointer ke awal
+              $result_sales->data_seek(offset: 0); // Reset pointer ke awal
               while ($sales = $result_sales->fetch_assoc()) { ?>
                   <option value="<?= $sales['id'] ?>" <?= $search_sales == $sales['id'] ? 'selected' : '' ?>>
                       <?= $sales['nama'] ?>
@@ -171,7 +171,7 @@
             <select class="form-select" name="search_bulan">
               <option value="">-- Pilih Bulan --</option>
               <?php for ($i = 1; $i <= 12; $i++) { ?>
-                <option value="<?= $i ?>" <?= $search_bulan == $i ? 'selected' : '' ?>><?= date('F', mktime(0, 0, 0, $i, 1)) ?></option>
+                <option value="<?= $i ?>" <?= $search_bulan == $i ? 'selected' : '' ?>><?= date(format: 'F', timestamp: mktime(hour: 0, minute: 0, second: 0, month: $i, 1)) ?></option>
               <?php } ?>
             </select>
           </div>
@@ -197,16 +197,16 @@
         if ($result->num_rows > 0) {
           $no = $offset;
           while ($row = $result->fetch_assoc()) {
-              $id = str_pad(htmlspecialchars($row['id']), 3, '0', STR_PAD_LEFT);
+              $id = str_pad(string: htmlspecialchars(string: $row['id']), length: 3, pad_string: '0', pad_type: STR_PAD_LEFT);
               echo "<tr>";
               echo "<td>" .  ++$no . "</td>";
               echo "<td>$id</td>";
-              echo "<td>" . htmlspecialchars($row['tanggal']) . "</td>";
-              echo "<td>" . htmlspecialchars($row['nama']) . "</td>";
-              echo "<td>" . htmlspecialchars($row['nama_lead']) . "</td>";
-              echo "<td>" . htmlspecialchars($row['nama']) . "</td>";
-              echo "<td>" . htmlspecialchars($row['no_wa']) . "</td>";
-              echo "<td>" . htmlspecialchars($row['kota']) . "</td>";
+              echo "<td>" . htmlspecialchars(string: $row['tanggal']) . "</td>";
+              echo "<td>" . htmlspecialchars(string: $row['nama']) . "</td>";
+              echo "<td>" . htmlspecialchars(string: $row['nama_lead']) . "</td>";
+              echo "<td>" . htmlspecialchars(string: $row['nama']) . "</td>";
+              echo "<td>" . htmlspecialchars(string: $row['no_wa']) . "</td>";
+              echo "<td>" . htmlspecialchars(string: $row['kota']) . "</td>";
               echo "</tr>";
           }
         } else {
