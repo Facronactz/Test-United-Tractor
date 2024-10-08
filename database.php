@@ -1,11 +1,11 @@
 <?php
-// Connect to the database
-$conn = new mysqli(hostname: $servername, username: $username, password: $password, database: $dbname);
+// // Connect to the database
+// $conn = new mysqli(hostname: $servername, username: $username, password: $password, database: $dbname);
 
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+// // Check connection
+// if ($conn->connect_error) {
+//     die("Connection failed: " . $conn->connect_error);
+// }
 
 // Check if table produk exists
 $query = "SHOW TABLES LIKE 'produk'";
@@ -104,7 +104,7 @@ foreach ($produk as $row) {
 }
 
 $data = array(
-    array('id' => 1, 'nama' => 'sales 2'),
+    array('id' => 1, 'nama' => 'sales 1'),
     array('id' => 2, 'nama' => 'sales 2'),
     array('id' => 3, 'nama' => 'sales 3')
 );
